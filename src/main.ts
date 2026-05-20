@@ -555,6 +555,7 @@ function tryUnlock() {
 
     // Сохраняем ключ
     sessionStorage.setItem('dossier_key', password);
+    fetch('/api/unlock', { method: 'POST' }).catch(() => {});
 
     // Салют
     for (let i = 0; i < 6; i++) {

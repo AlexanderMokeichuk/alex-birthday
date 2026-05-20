@@ -23,8 +23,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         typeof item === 'string' ? JSON.parse(item) : item
     );
 
+    const solvedRaw = await redis.get<number | string>('bday:solved_count');
+    const solved = Number(solvedRaw) || 0;
+
     res.setHeader('Cache-Control', 'no-store');
-    return res.status(200).json({ ok: true, list });
+    return res.status(200).json({ ok: true, list, solved });
   } catch (err) {
     console.error('GET /api/list failed:', err);
     return res.status(500).json({ error: 'Server error', list: [] });
