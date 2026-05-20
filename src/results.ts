@@ -156,6 +156,11 @@ async function load() {
 
     totalBig.textContent = String(list.length);
 
+    const solvedBar = document.getElementById('solvedBar');
+    if (solvedBar && typeof data.solved === 'number') {
+      solvedBar.innerHTML = `🔓 пароль отгадали <b style="color:#ffb02e;">${data.solved}</b> раз — секрет так себе 😄`;
+    }
+
     if (typeof data.solved === 'number') {
       const c = document.getElementById('totalBig');
       if (c) c.title = `пароль отгадали ${data.solved} раз`;
