@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, Alex</title>
+  <meta name="description" content="Поздравь Алекса. Анонимно. Наверное." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Google Identity (для настоящих имён). Работает только если задан CLIENT_ID ниже. -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body class="page-home">
+
+<canvas id="c"></canvas>
+<div class="grain"></div>
+<div id="cursor"></div>
+
+<div class="ui">
+  <div class="kicker">CASE FILE №<span id="caseNum">047</span> — СОВЕРШЕННО СЕКРЕТНО</div>
+
+  <h1 class="title" aria-label="Happy Birthday">
+    <span class="title-line title-top">HAPPY</span>
+    <span class="title-line title-bottom">BIRTHDAY</span>
+  </h1>
+
+  <div class="name-line">
+    <span class="name-script">Alex</span>
+    <span class="stamp">21+</span>
+  </div>
+
+  <p class="tag">Оставь поздравление. <em>Анонимно.</em> <span class="tag-wink">наверное 🕵️</span></p>
+
+  <button class="btn" id="congBtn">
+    <span class="btn-dot"></span>
+    Поздравить
+  </button>
+</div>
+
+<div class="hint" id="hint">клик по фону — салют · клик «поздравить» — открытка</div>
+
+<!-- ===== Модалка ===== -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <button class="mx" id="mx" aria-label="закрыть">✕</button>
+
+    <div class="modal-tape modal-tape-l"></div>
+    <div class="modal-tape modal-tape-r"></div>
+
+    <div class="modal-head">
+      <div class="modal-kicker">показания свидетеля</div>
+      <h2 class="modal-title">Поздравь Алекса</h2>
+    </div>
+
+    <input id="ni" type="text" maxlength="80" placeholder="Имя (или оставь пустым, аноним 🕵️)" />
+    <textarea id="mi" rows="3" maxlength="2000" placeholder="Напиши что-нибудь тёплое… 💌"></textarea>
+
+    <div class="emoji-label">настроение:</div>
+    <div class="emojis" id="ep"></div>
+
+    <!-- Google sign-in — мягкая кнопка "подписать" -->
+    <div class="gsign" id="gsign">
+      <div class="gsign-row">
+        <div class="gsign-text">
+          <span class="gsign-title">Подписать поздравление?</span>
+          <span class="gsign-sub">чтобы Алекс знал, кто из друзей — это ты ✨</span>
+        </div>
+        <div id="gbtn"></div>
+      </div>
+      <div class="gsign-done" id="gdone" hidden>
+        ✓ подписано как <strong id="gname"></strong>
+      </div>
+    </div>
+
+    <button class="send" id="sb">
+      <span id="sbText">Отправить</span>
+      <span class="send-spinner" id="sbSpin" hidden></span>
+    </button>
+
+    <p class="modal-foot">отправляя, ты соглашаешься, что детектив уже идёт по следу</p>
+  </div>
+</div>
+
+<!-- ===== "Тебя вычислили" — экран после отправки ===== -->
+<div class="overlay reveal-overlay" id="reveal">
+  <div class="reveal-card" id="revealCard">
+    <div class="reveal-stamp">IDENTIFIED</div>
+    <div class="reveal-eye">🕵️</div>
+    <h2 class="reveal-title">Спасибо за поздравление!</h2>
+    <p class="reveal-sub">Только вот «аноним» — это сильно сказано. Вот что я уже знаю:</p>
+    <ul class="reveal-list" id="revealList"></ul>
+    <p class="reveal-foot">…а остальное Алекс посмотрит в досье 😏</p>
+    <button class="reveal-close" id="revealClose">ладно, поймал 🙃</button>
+  </div>
+</div>
+
+<!-- Измененная кнопка перехода в досье -->
+<button class="results" id="gateBtn">📁 досье поздравлений →</button>
+
+<!-- ===== Модалка ввода пароля (gateOverlay) ===== -->
+<div class="overlay" id="gateOverlay">
+  <div class="modal">
+    <button class="mx" id="gateClose" aria-label="закрыть">✕</button>
+
+    <div class="modal-head">
+      <div class="modal-kicker">проверка уровня доступа</div>
+      <h2 class="modal-title">Введите код доступа к архиву</h2>
+    </div>
+
+    <input
+            id="gatePass"
+            type="text"
+            inputmode="numeric"
+            maxlength="8"
+            placeholder="Введите код доступа..."
+            style="text-align: center; font-family: 'Space Mono', monospace;"
+    />
+    <div id="gateError" style="color: var(--accent); margin: 10px 0; font-size: 14px;" hidden>❌ Неверный код. Детектив уже выехал.</div>
+    <div id="gateCounter" style="margin: 10px 0; font-size: 13px; opacity: 0.7;"></div>
+
+    <button class="send" id="gateSubmit">
+      <span id="gateSubmitText">Открыть</span>
+      <span class="send-spinner" id="gateSpin" hidden></span>
+    </button>
+  </div>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

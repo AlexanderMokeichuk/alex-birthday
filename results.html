@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Досье · Поздравления</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/results.css" />
+</head>
+<body class="page-results">
+
+<div class="grain"></div>
+
+<header class="r-header">
+  <a href="/" class="r-back">← на главную</a>
+  <div class="r-head-center">
+    <div class="r-kicker">CASE FILE · подозреваемые в поздравлении</div>
+    <h1 class="r-title">ДОСЬЕ</h1>
+  </div>
+  <div class="r-count">
+    <span id="totalBig">0</span>
+    <small>записей</small>
+  </div>
+</header>
+
+<div class="r-toolbar">
+  <div class="r-stats" id="quickStats"></div>
+  <button class="r-refresh" id="refreshBtn">⟳ обновить</button>
+</div>
+
+<main class="r-board" id="board">
+  <div class="r-loading" id="loading">
+    <div class="r-spinner"></div>
+    поднимаю архив…
+  </div>
+</main>
+
+<script type="module" src="/src/results.ts"></script>
+</body>
+</html>
